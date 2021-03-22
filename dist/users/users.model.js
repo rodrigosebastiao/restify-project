@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        select: false
+        select: true
     }
 });
 // Tratativas de esquema para user

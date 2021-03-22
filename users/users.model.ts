@@ -24,7 +24,6 @@ export class User {
 
 import * as mongoose from "mongoose";
 
-
 export interface User extends mongoose.Document {
     name: String,
     email: String,
@@ -41,9 +40,9 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        select: false
+        select: true
     }
 });
 
 // Tratativas de esquema para user
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model<User>("User", userSchema);

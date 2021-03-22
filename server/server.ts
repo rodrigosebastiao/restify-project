@@ -16,10 +16,6 @@ export default class Server {
             useCreateIndex: true
           });
     }
-    // inititializeDB(){
-    //     (<any>mongoose).Promise = global.Promise
-    //     return mongoose.connect(enviroment.db.url)
-    // }
 
     initRoutes(routers: Router[]): Promise<any>{
         return new Promise((resolve, reject)=>{
@@ -30,9 +26,9 @@ export default class Server {
                     version: "1.0.0"
                 });
 
-                //Plugin de queries digitadas
+                //Plugin de queries da URL
                 this.application = this.application.use(restify.plugins.queryParser());
-                //Plugin de conversão para req.body
+                //Plugin de conversão do req.body para json
                 this.application = this.application.use(restify.plugins.bodyParser());
 
                 //Rotas
@@ -55,7 +51,6 @@ export default class Server {
     }
     
     bootstrap(routers: Router[] = []):  Promise<Server>{
-        // return this.initRoutes(routers).then(()=>this);
         return this.inititializeDB().then(()=>this.initRoutes(routers).then(()=>this));
     }
 }
