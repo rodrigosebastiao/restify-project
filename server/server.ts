@@ -2,7 +2,7 @@ import * as restify from "restify";
 import * as mongoose from 'mongoose';
 import {environment} from "../common/environment";
 import {Router} from "../common/router";
-
+import { mergePatchBodyParser } from './merge-patch-parser';
 
 export default class Server {
     application: restify.Server
@@ -28,8 +28,12 @@ export default class Server {
 
                 //Plugin de queries da URL
                 this.application = this.application.use(restify.plugins.queryParser());
+                
                 //Plugin de conversão do req.body para json
                 this.application = this.application.use(restify.plugins.bodyParser());
+
+                // Config especial para match-patch+json
+                this.application = this.application.use(mergePatchBodyParser);
 
                 //Rotas
                 routers.forEach((router)=>{

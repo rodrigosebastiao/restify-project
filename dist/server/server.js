@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const restify = require("restify");
 const mongoose = require("mongoose");
 const environment_1 = require("../common/environment");
+const merge_patch_parser_1 = require("./merge-patch-parser");
 class Server {
     inititializeDB() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -36,6 +37,8 @@ class Server {
                 this.application = this.application.use(restify.plugins.queryParser());
                 //Plugin de conversão do req.body para json
                 this.application = this.application.use(restify.plugins.bodyParser());
+                // Config especial para match-patch+json
+                this.application = this.application.use(merge_patch_parser_1.mergePatchBodyParser);
                 //Rotas
                 routers.forEach((router) => {
                     router.applyRoutes(this.application);
